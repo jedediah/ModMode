@@ -30,6 +30,11 @@ public class ModMode extends JavaPlugin {
         return modmode.contains(player.getDisplayName());
     }
 
+    private void setInteraction(Player player, boolean yes) {
+        player.setAffectsSpawning(yes);
+        player.setCollidesWithEntities(yes);
+    }
+
     public void enableVanish(Player player) {
         for (Player other : getServer().getOnlinePlayers()) {
             if (Permissions.hasPermission(other, Permissions.SHOWVANISHED)) {
@@ -41,6 +46,7 @@ public class ModMode extends JavaPlugin {
             other.hidePlayer(player);
         }
 
+        setInteraction(player, false);
         player.sendMessage(ChatColor.RED + "Poof!");
     }
 
@@ -52,6 +58,7 @@ public class ModMode extends JavaPlugin {
             other.hidePlayer(player);
         }
 
+        setInteraction(player, false);
         player.sendMessage(ChatColor.RED + "You are fully vanished!");
     }
 
@@ -61,6 +68,7 @@ public class ModMode extends JavaPlugin {
                 other.showPlayer(player);
             }
 
+            setInteraction(player, true);
             player.sendMessage(ChatColor.RED + "You have reappeared!");
         } else {
             player.sendMessage(ChatColor.RED + "You are not vanished!");
